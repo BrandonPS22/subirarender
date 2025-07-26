@@ -114,7 +114,7 @@ function App() {
               onClick={() => setView('tags')}
               className="text-left w-full hover:text-blue-600"
             >
-              My Tags
+              My Categories
             </button>
           </li>
         </ul>
@@ -196,10 +196,10 @@ function App() {
           </>
         ) : view === 'tags' ? (
           <>
-            <h2 className="text-2xl font-bold mb-4">My Tags</h2>
+            <h2 className="text-2xl font-bold mb-4">My Categories</h2>
             <div className="mb-4 flex items-center gap-2">
               <input
-                placeholder="New tag name"
+                placeholder="New category name"
                 value={form.tagName || ''}
                 onChange={(e) =>
                   setForm({ ...form, tagName: e.target.value })
@@ -219,7 +219,7 @@ function App() {
                 }}
                 className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded"
               >
-                Create Tag
+                Create Category
               </button>
             </div>
             <ul className="list-disc pl-6">
