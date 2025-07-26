@@ -15,7 +15,7 @@ function App() {
   const [selectedTagId, setSelectedTagId] = useState(null);
 
   const fetchNotes = async () => {
-    let url = `http://localhost:3000/notes?archived=${viewArchived}`;
+    let url = `${import.meta.env.VITE_API_URL}/notes?archived=${viewArchived}`;
     if (selectedTagId) url += `&tagId=${selectedTagId}`;
     const res = await fetch(url);
     const data = await res.json();
@@ -23,14 +23,14 @@ function App() {
   };
 
   const fetchTags = async () => {
-    const res = await fetch('http://localhost:3000/tags');
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/tags`);
     const data = await res.json();
     setTags(data);
   };
 
   const createNote = async () => {
     if (!form.title.trim() || !form.content.trim()) return;
-    await fetch('http://localhost:3000/notes', {
+    await fetch(`${import.meta.env.VITE_API_URL}/notes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
@@ -41,12 +41,12 @@ function App() {
   };
 
   const deleteNote = async (id) => {
-    await fetch(`http://localhost:3000/notes/${id}`, { method: 'DELETE' });
+    await fetch(`${import.meta.env.VITE_API_URL}/notes/${id}`, { method: 'DELETE' });
     fetchNotes();
   };
 
   const toggleArchive = async (id) => {
-    await fetch(`http://localhost:3000/notes/${id}/archive`, { method: 'PATCH' });
+    await fetch(`${import.meta.env.VITE_API_URL}/notes/${id}/archive`, { method: 'PATCH' });
     fetchNotes();
   };
 
@@ -61,7 +61,7 @@ function App() {
   };
 
   const updateNote = async () => {
-    await fetch(`http://localhost:3000/notes/${editNote.id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/notes/${editNote.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -209,7 +209,7 @@ function App() {
               <button
                 onClick={async () => {
                   if (!form.tagName?.trim()) return;
-                  await fetch('http://localhost:3000/tags', {
+                  await fetch(`${import.meta.env.VITE_API_URL}/tags`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name: form.tagName }),
