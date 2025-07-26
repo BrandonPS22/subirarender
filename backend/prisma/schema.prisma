@@ -20,4 +20,12 @@ model Note {
   archived  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  tagId     Int?     
+  tag       Tag?     @relation(fields: [tagId], references: [id])
+}
+
+model Tag {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  notes Note[]
 }

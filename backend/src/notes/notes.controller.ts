@@ -1,5 +1,13 @@
 import {
-  Controller, Get, Post, Body, Param, Delete, Put, Patch, Query
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+  Patch,
+  Query,
 } from '@nestjs/common';
 import { NotesService } from './notes.service';
 
@@ -8,14 +16,17 @@ export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
   @Post()
-  create(@Body() body: { title: string; content: string }) {
+  create(@Body() body: { title: string; content: string; tagId?: number }) {
     return this.notesService.create(body);
   }
 
   @Get()
-  findAll(@Query('archived') archived: string) {
+  findAll(
+    @Query('archived') archived: string,
+    @Query('tagId') tagId?: string
+  ) {
     const isArchived = archived === 'true';
-    return this.notesService.findAll(isArchived);
+    return this.notesService.findAll(isArchived, tagId ? +tagId : undefined);
   }
 
   @Get(':id')
@@ -24,7 +35,10 @@ export class NotesController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() body: { title: string; content: string }) {
+  update(
+    @Param('id') id: string,
+    @Body() body: { title: string; content: string; tagId?: number }
+  ) {
     return this.notesService.update(+id, body);
   }
 

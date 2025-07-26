@@ -6,12 +6,18 @@ import { Note } from '@prisma/client';
 export class NotesService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: { title: string; content: string }): Promise<Note> {
+  async create(data: { title: string; content: string; tagId?: number }): Promise<Note> {
     return this.prisma.note.create({ data });
   }
 
-  async findAll(archived: boolean): Promise<Note[]> {
-    return this.prisma.note.findMany({ where: { archived } });
+  async findAll(archived: boolean, tagId?: number): Promise<Note[]> {
+    return this.prisma.note.findMany({
+      where: {
+        archived,
+        tagId: tagId ?? undefined,
+      },
+      orderBy: { updatedAt: 'desc' },
+    });
   }
 
   async findOne(id: number): Promise<Note> {
@@ -20,7 +26,7 @@ export class NotesService {
     return note;
   }
 
-  async update(id: number, data: { title: string; content: string }): Promise<Note> {
+  async update(id: number, data: { title: string; content: string; tagId?: number }): Promise<Note> {
     return this.prisma.note.update({ where: { id }, data });
   }
 
