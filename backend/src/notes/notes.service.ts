@@ -7,7 +7,17 @@ export class NotesService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: { title: string; content: string; tagId?: number }): Promise<Note> {
-    return this.prisma.note.create({ data });
+    return this.prisma.note.create({
+      data: {
+        title: data.title,
+        content: data.content,
+        ...(data.tagId && {
+          tag: {
+            connect: { id: data.tagId },
+          },
+        }),
+      },
+    });
   }
 
   async findAll(archived: boolean, tagId?: number): Promise<Note[]> {

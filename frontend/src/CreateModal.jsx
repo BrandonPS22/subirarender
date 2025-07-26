@@ -1,62 +1,63 @@
+///import './index.css';
 function CreateModal({ form, onChange, onClose, onCreate, tags }) {
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.6)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 1000
-    }}>
-      <div style={{
-        background: '#fff',
-        padding: '2rem',
-        borderRadius: '8px',
-        minWidth: '300px',
-        maxWidth: '500px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem'
-      }}>
-        <h3>Create Note</h3>
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <h3 className="text-xl font-semibold mb-4">Create Note</h3>
 
         <div>
-          <label>Title:</label><br />
+          <label className="block text-sm font-medium text-gray-700 mb-1">Title:</label>
           <input
             value={form.title}
             onChange={e => onChange({ ...form, title: e.target.value })}
-            style={{ width: '100%' }}
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div>
-          <label>Content:</label><br />
+          <label className="block text-sm font-medium text-gray-700 mb-1">Content:</label>
           <textarea
             rows="4"
             value={form.content}
             onChange={e => onChange({ ...form, content: e.target.value })}
-            style={{ width: '100%' }}
+            className="w-full border border-gray-300 rounded px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         <div>
-          <label>Category:</label><br />
+          <label className="block text-sm font-medium text-gray-700 mb-1">Category:</label>
           <select
             value={form.tagId ?? ''}
-            onChange={e => onChange({ ...form, tagId: e.target.value ? parseInt(e.target.value) : null })}
-            style={{ width: '100%' }}
+            onChange={e =>
+              onChange({
+                ...form,
+                tagId: e.target.value ? parseInt(e.target.value) : null,
+              })
+            }
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">No Category</option>
             {tags.map(tag => (
-              <option key={tag.id} value={tag.id}>{tag.name}</option>
+              <option key={tag.id} value={tag.id}>
+                {tag.name}
+              </option>
             ))}
           </select>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
-          <button onClick={onClose}>Cancel</button>
-          <button onClick={onCreate}>Create</button>
+        <div className="flex justify-end gap-3 pt-2">
+          <button
+            onClick={onCreate}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded"
+          >
+            Create
+          </button>
+          <button
+            onClick={onClose}
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+          >
+            Cancel
+          </button>          
         </div>
       </div>
     </div>
