@@ -17,7 +17,6 @@ export class NotesController {
 
   @Post()
   create(@Body() body: { title: string; content: string; tagId?: number }) {
-    console.log('📩 POST body received:', body);
     return this.notesService.create(body);
   }
 
